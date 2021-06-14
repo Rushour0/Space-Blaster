@@ -25,16 +25,3 @@ class Blaster:
 			self.x+=self.x_chg
 		if 0<self.y+self.y_chg and self.y+self.y_chg+self.height<WINDOW_HEIGHT:
 			self.y+=self.y_chg
-
-	def moveRight(self,x):
-		self.x+=x
-
-	def moveLeft(self,x):
-		self.x+=x
-		
-	def moveDown(self,y):
-		self.y+=y
-		
-	def moveUp(self,y):
-		self.y+=y
-		
