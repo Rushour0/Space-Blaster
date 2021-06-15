@@ -1,4 +1,5 @@
 from globals import *
+
 # PyGame initialized
 pygame.init()
 
@@ -19,10 +20,13 @@ screen = pygame.display.set_mode(WINDOW_DIMENSIONS)
 background = pygame.image.load(background_img)
 
 # Blaster declaration
-spaceship = Blaster(spaceship_img,WINDOW_WIDTH/2,WINDOW_HEIGHT-WINDOW_HEIGHT/8)
+spaceship = Spaceship(spaceship_img,WINDOW_WIDTH/2,WINDOW_HEIGHT-WINDOW_HEIGHT/8)
 
 # Bullets array
-bullets = []
+lasers = []
+
+# Laser sound
+lasersound = pygame.mixer.Sound(laser_sound)
 
 def background_show():
 	screen.blit(background,(0,0))
@@ -31,13 +35,13 @@ def spaceship_show():
 	spaceship.changeXY(WINDOW_DIMENSIONS = WINDOW_DIMENSIONS)
 	screen.blit(*spaceship.load())
 
-def bullets_show(bullets = bullets):
-	for num,bullet in enumerate(bullets):
-		if bullet.changeXY(WINDOW_DIMENSIONS = WINDOW_DIMENSIONS):
-			screen.blit(*bullet.load())
-			print("dikha?")
+def bullets_show():
+	global lasers
+	for num,laser in enumerate(lasers):
+		if laser.changeXY(WINDOW_DIMENSIONS = WINDOW_DIMENSIONS):
+			screen.blit(*laser.load())
 		else:
-			bullets = bullets[1:]
+			del lasers[num]
 
 def gameLoop():
 
@@ -45,13 +49,7 @@ def gameLoop():
 		if event.type == pygame.QUIT:
 			return False
 
-		if pygame.key.get_pressed()[32]:
-			if len(bullets)<=3:
-				print("ini")
-				bullets.append(Bullet(bullet_img,spaceship.x,spaceship.y))
-
 		if event.type == pygame.KEYDOWN:
-			print(pygame.key.get_pressed().index(1))
 			if event.key in [pygame.K_LEFT,pygame.K_a]:
 				spaceship.x_chg = -spaceship.default_x
 
@@ -64,6 +62,11 @@ def gameLoop():
 
 			if event.key in [pygame.K_RIGHT,pygame.K_d] and not (pygame.key.get_pressed()[80] or pygame.key.get_pressed()[4]):
 				spaceship.x_chg = 0
+
+			if event.key == pygame.K_SPACE:
+				if len(lasers)<3:
+					lasers.append(Laser(laser_img,spaceship.x,spaceship.y))
+					lasersound.play()
 
 	background_show()	
 	spaceship_show()

@@ -1,6 +1,6 @@
 import pygame
 
-class Bullet:
+class Laser:
 	def __init__(self,img_name,x,y):
 		img = pygame.image.load(img_name)
 		self.img_path = img_name
@@ -10,10 +10,10 @@ class Bullet:
 		self.width = img.get_width()
 		self.height = img.get_height()
 		self.default_x = 0
-		self.default_y = 1
+		self.default_y = 0.5
 		self.x_chg = self.default_x
 		self.y_chg = self.default_y
-		print(self.width,self.height)
+		# print(self.width,self.height)
 
 	def fire(self):
 		pass

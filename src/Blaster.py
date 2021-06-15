@@ -1,6 +1,6 @@
 import pygame
 
-class Blaster:
+class Spaceship:
 	def __init__(self,img_name,x,y):
 		img = pygame.image.load(img_name)
 		self.img_path = img_name
@@ -13,7 +13,7 @@ class Blaster:
 		self.y_chg = 0
 		self.default_x = 0.5
 		self.default_y = 0.5
-		print(self.width,self.height)
+		# print(self.width,self.height)
 
 	def load(self):
 		return self.img,tuple([self.x-self.width/2,self.y-self.height/2])
