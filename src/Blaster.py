@@ -11,10 +11,8 @@ class Blaster:
 		self.height = img.get_height()
 		self.x_chg = 0
 		self.y_chg = 0
-		self.default_x = 1
-		self.default_y = 1
-		self.xc = self.x-self.width/2
-		self.yc = self.y-self.height/2
+		self.default_x = 0.5
+		self.default_y = 0.5
 		print(self.width,self.height)
 
 	def load(self):
@@ -27,3 +25,6 @@ class Blaster:
 			self.x+=self.x_chg
 		if self.width/2<self.y+self.y_chg and self.y+self.y_chg+self.height<WINDOW_HEIGHT+self.width/2:
 			self.y+=self.y_chg
+		else:
+			return False
+		return True
