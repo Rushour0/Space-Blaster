@@ -1,17 +1,9 @@
-import sys
-import pygame
-
-sys.path.append("src")
-sys.path.append("img")
-from Blaster import *
-from paths import *
+from globals import *
 # PyGame initialized
 pygame.init()
 
 WINDOW_DIMENSIONS = (800,600)
 WINDOW_WIDTH,WINDOW_HEIGHT = WINDOW_DIMENSIONS
-# Create screen
-screen = pygame.display.set_mode(WINDOW_DIMENSIONS)
 
 # Set window name
 pygame.display.set_caption("Space Blaster")
@@ -20,23 +12,31 @@ pygame.display.set_caption("Space Blaster")
 icon = pygame.image.load(icon_img)
 pygame.display.set_icon(icon)
 
+# Create screen
+screen = pygame.display.set_mode(WINDOW_DIMENSIONS)
+
+# Background image
+background = pygame.image.load(background_img)
+
 # Blaster declaration
 spaceship = Blaster(spaceship_img,WINDOW_WIDTH/2,WINDOW_HEIGHT-WINDOW_HEIGHT/8)
 
-def show_me():
+def background_show():
+	screen.blit(background,(0,0))
+
+def spaceship_show():
 	spaceship.changeXY(WINDOW_DIMENSIONS = WINDOW_DIMENSIONS)
-	screen.blit(*list(spaceship.load()))
+	screen.blit(*spaceship.load())
+
 running = True
 
 def gameLoop():
-
 
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			return False
 
 		if event.type == pygame.KEYDOWN:
-			print(pygame.key.get_pressed().index(1))
 			if event.key in [pygame.K_LEFT,pygame.K_a]:
 				spaceship.x_chg = -spaceship.default_x
 
@@ -50,9 +50,8 @@ def gameLoop():
 			if event.key in [pygame.K_RIGHT,pygame.K_d] and not (pygame.key.get_pressed()[80] or pygame.key.get_pressed()[4]):
 				spaceship.x_chg = 0
 
-
-			
-	show_me()
+	background_show()	
+	spaceship_show()
 	pygame.display.update()
 	
 	return True
