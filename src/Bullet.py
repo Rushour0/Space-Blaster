@@ -15,8 +15,6 @@ class Laser:
 		self.y_chg = self.default_y
 		# print(self.width,self.height)
 
-	def fire(self):
-		pass
 	def load(self):
 		return self.img,tuple([self.x-self.width/2,self.y-self.height/2])
 

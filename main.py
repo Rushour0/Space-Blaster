@@ -68,9 +68,10 @@ def gameLoop():
 					lasers.append(Laser(laser_img,spaceship.x,spaceship.y))
 					lasersound.play()
 
-	background_show()	
-	spaceship_show()
+	background_show()
 	bullets_show()
+	spaceship_show()
+	
 	pygame.display.update()
 	
 	return True
