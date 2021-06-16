@@ -1,4 +1,5 @@
 import pygame
+import random
 
 class Asteroid:
 	def __init__(self,img_name,x,y):
@@ -10,3 +11,5 @@ class Asteroid:
 		self.isCollision = False
 		self.width = img.get_width()
 		self.height = img.get_height()
+		self.x_chg = random.randint(-1,-1)
+		self.y_chg = random.randint(1,3)
