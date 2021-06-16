@@ -1,6 +1,6 @@
 import pygame
 
-class Laser:
+class DisplayBullet:
 	def __init__(self,img_name,x,y):
 		img = pygame.image.load(img_name)
 		self.img_path = img_name
@@ -9,15 +9,16 @@ class Laser:
 		self.img = img
 		self.width = img.get_width()
 		self.height = img.get_height()
-		self.default_x = 0
-		self.default_y = 0.5
-		self.x_chg = self.default_x
-		self.y_chg = self.default_y
 		# print(self.width,self.height)
 
 	def load(self):
 		return self.img,tuple([self.x-self.width/2,self.y-self.height/2])
 
+class Laser(DisplayBullet):
+	default_x = 0
+	default_y = 0.6
+	x_chg = default_x
+	y_chg = default_y
 	def changeXY(self,WINDOW_WIDTH = None,WINDOW_HEIGHT = None,WINDOW_DIMENSIONS = None):
 		if WINDOW_DIMENSIONS is not None:
 			WINDOW_WIDTH,WINDOW_HEIGHT = WINDOW_DIMENSIONS
@@ -28,3 +29,4 @@ class Laser:
 		else:
 			return False
 		return True
+

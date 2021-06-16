@@ -1,5 +1,6 @@
 import sys
 import pygame
+import random
 
 sys.path.append("src")
 sys.path.append("img")

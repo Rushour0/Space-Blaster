@@ -28,6 +28,9 @@ lasers = []
 # Laser sound
 lasersound = pygame.mixer.Sound(laser_sound)
 
+# Display available bullets
+available_bullets = [DisplayBullet(available_bullet_img,WINDOW_WIDTH-32-32*i,96) for i in range(3,0,-1)]
+
 def background_show():
 	screen.blit(background,(0,0))
 
@@ -42,6 +45,9 @@ def bullets_show():
 			screen.blit(*laser.load())
 		else:
 			del lasers[num]
+	for bullet in available_bullets[:3-len(lasers)]:
+		screen.blit(*bullet.load())
+
 
 def gameLoop():
 
