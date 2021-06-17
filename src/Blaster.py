@@ -12,7 +12,7 @@ class Spaceship:
 		self.x_chg = 0
 		self.y_chg = 0
 		self.default_x = 0.5
-		self.default_y = 0.5
+		self.default_y = 0.75
 		# print(self.width,self.height)
 
 	def load(self):
