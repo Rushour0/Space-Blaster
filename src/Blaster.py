@@ -1,5 +1,6 @@
 import pygame
 
+# Defining Spaceship class for spawning new spaceship object
 class Spaceship:
 	def __init__(self,img_name,x,y):
 		img = pygame.image.load(img_name)

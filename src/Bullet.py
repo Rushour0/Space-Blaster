@@ -1,5 +1,6 @@
 import pygame
 
+# Defining DisplayBullet class for displaying type of bullet (Fired or Available bullets)
 class DisplayBullet:
 	def __init__(self,img_name,x,y):
 		img = pygame.image.load(img_name)
@@ -14,6 +15,7 @@ class DisplayBullet:
 	def load(self):
 		return self.img,tuple([self.x-self.width/2,self.y-self.height/2])
 
+# Defining Laser class for firing bullets/lasers
 class Laser(DisplayBullet):
 	default_x = 0
 	default_y = 0.6

@@ -29,10 +29,11 @@ lasers = []
 lasersound = pygame.mixer.Sound(laser_sound)
 
 # Display available bullets
-available_bullets = [DisplayBullet(available_bullet_img,WINDOW_WIDTH-32-48*i,96) for i in range(3,0,-1)]
+available_bullets = [DisplayBullet(available_bullet_img,WINDOW_WIDTH-32-32*i,96) for i in range(3,0,-1)]
 
 # Asteroids list
 asteroids = []
+
 def background_show():
 	screen.blit(background,(0,0))
 
