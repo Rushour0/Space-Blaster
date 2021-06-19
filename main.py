@@ -42,6 +42,11 @@ asteroids = []
 # last time when an asteroid was generated
 last_time = time.time()
 
+# The blast images
+blasts = []
+
+# Blast sound
+blastsound = pygame.mixer.Sound(blast_sound)
 # Asteroid Generator with time parameter
 def asteroid_generator(time_elapse):
 	if len(asteroids)>5:
@@ -76,9 +81,6 @@ def spaceship_show():
 	screen.blit(*spaceship.load())
 	return True
 
-# The blast images
-blasts = []
-
 # Draw bullets/lasers
 def bullets_show():
 	global lasers
@@ -87,7 +89,8 @@ def bullets_show():
 		if collided:
 			# Add blast object img
 			blasts.append(Blast(blast_imgs[random.randint(0,2)],asteroids[asteroid_num].x,asteroids[asteroid_num].y))
-
+			# Play blast sound
+			blastsound.play()
 			# deleting residue
 			del asteroids[asteroid_num]
 			del lasers[num]

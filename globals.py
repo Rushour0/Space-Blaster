@@ -8,7 +8,7 @@ sys.path.append("img")
 sys.path.append("music")
 
 # laser bullets limit
-bullet_limit = 1
+bullet_limit = 2
 
 # Time for generation of new asteroid
 time_elapse = 0.1

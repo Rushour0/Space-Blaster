@@ -5,8 +5,8 @@ def CollisionDetect(toCheck,objectList):
 	if len(objectList) == 0:
 		return [False,None]
 	for num,obj in enumerate(objectList):
-		x_range_obj = [-obj.width/2+obj.x,obj.width/2+obj.x]
-		y_range_obj = [-obj.height/2+obj.y,obj.height/2+obj.y]
+		x_range_obj = [-obj.width/1.2+obj.x,obj.width/1.2+obj.x]
+		y_range_obj = [-obj.height/1.2+obj.y,obj.height/1.2+obj.y]
 		if x_range_obj[0]<=toCheck.x<=x_range_obj[1] and y_range_obj[0]<=toCheck.y<=y_range_obj[1]:
 			return [True,num]
 	return [False,None]
