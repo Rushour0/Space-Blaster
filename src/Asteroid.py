@@ -19,9 +19,19 @@ class Asteroid:
 		self.isShot = False
 		self.width = img.get_width()
 		self.height = img.get_height()
-		self.x_chg = random.randrange(-0.75,0.75,0.05)
-		self.y_chg = 0.6
+		self.x_chg = 0
+		self.y_chg = 0.75
 
 	def load(self):
 		return self.img,tuple([self.x-self.width/2,self.y-self.height/2])
 
+	def changeXY(self,WINDOW_WIDTH = None,WINDOW_HEIGHT = None,WINDOW_DIMENSIONS = None):
+		if WINDOW_DIMENSIONS is not None:
+			WINDOW_WIDTH,WINDOW_HEIGHT = WINDOW_DIMENSIONS
+		if self.width/2<self.x+self.x_chg and self.x+self.x_chg+self.width<WINDOW_WIDTH+self.width*1.5:
+			self.x+=self.x_chg
+		if self.height/2<self.y+self.y_chg and self.y+self.y_chg+self.height<WINDOW_HEIGHT+self.height*1.5:
+			self.y+=self.y_chg
+		else:
+			return False
+		return True
