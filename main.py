@@ -34,7 +34,7 @@ lasersound = pygame.mixer.Sound(laser_sound)
 available_bullets = [DisplayBullet(available_bullet_img,WINDOW_WIDTH-32-32*i,96) for i in range(bullet_limit,0,-1)]
 
 # Universal asteroid available spawns
-asteroid_spawn_x = uni_asteroid_spawn_x[random.randint(0,len(uni_asteroid_spawn_x)-1)].copy()
+asteroid_spawn_x = uni_asteroid_spawn_x[random.randint(0,len(uni_asteroid_spawn_x)-1)][:]
 
 # Asteroids list
 asteroids = []
@@ -54,7 +54,7 @@ def asteroid_generator(time_elapse):
 
 		# Change to new x-spawn sequence
 		if len(asteroid_spawn_x) == 0:
-			asteroid_spawn_x = uni_asteroid_spawn_x[random.randint(0,len(uni_asteroid_spawn_x)-1)].copy()
+			asteroid_spawn_x = uni_asteroid_spawn_x[random.randint(0,len(uni_asteroid_spawn_x)-1)][:]
 
 		y = uni_asteroid_spawn_y
 		asteroids.append(Asteroid(asteroid_imgs[random.randint(0,3)],x,y))
@@ -66,13 +66,32 @@ def background_show():
 
 # Draw spaceship
 def spaceship_show():
+	global spaceship
+	collided,asteroid_num = CollisionDetect(spaceship,asteroids)
+	if collided:
+		#del asteroids[asteroid_num]
+		#del spaceship
+		return False
 	spaceship.changeXY(WINDOW_DIMENSIONS = WINDOW_DIMENSIONS)
 	screen.blit(*spaceship.load())
+	return True
+
+# The blast images
+blasts = []
 
 # Draw bullets/lasers
 def bullets_show():
 	global lasers
 	for num,laser in enumerate(lasers):
+		collided,asteroid_num = CollisionDetect(laser,asteroids)
+		if collided:
+			# Add blast object img
+			blasts.append(Blast(blast_imgs[random.randint(0,2)],asteroids[asteroid_num].x,asteroids[asteroid_num].y))
+
+			# deleting residue
+			del asteroids[asteroid_num]
+			del lasers[num]
+			continue
 		if laser.changeXY(WINDOW_DIMENSIONS = WINDOW_DIMENSIONS):
 			screen.blit(*laser.load())
 		else:
@@ -80,6 +99,7 @@ def bullets_show():
 
 	for bullet in available_bullets[:bullet_limit-len(lasers)]:
 		screen.blit(*bullet.load())
+	return True
 
 # Draw asteroids
 def asteroid_show():
@@ -90,7 +110,14 @@ def asteroid_show():
 		else:
 			del asteroids[num]
 
-
+def blast_show():
+	global blasts
+	for num,blast in enumerate(blasts):
+		try:
+			screen.blit(*blast.load())
+		except:
+			del blasts[num]
+	
 # Eternally running game loop
 while 1:
 	for event in pygame.event.get():
@@ -120,9 +147,11 @@ while 1:
 	screen.fill((0,0,0))
 	background_show()
 	asteroid_generator(time_elapse)
-	asteroid_show()
 	bullets_show()
-	spaceship_show()
-		
+	if not (spaceship_show()):
+		break
+	asteroid_show()
+	blast_show()
 	pygame.display.update()
 
+print("over")
