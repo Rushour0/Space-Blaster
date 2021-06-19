@@ -29,10 +29,16 @@ lasers = []
 lasersound = pygame.mixer.Sound(laser_sound)
 
 # Display available bullets
-available_bullets = [DisplayBullet(available_bullet_img,WINDOW_WIDTH-32-32*i,96) for i in range(3,0,-1)]
+available_bullets = [DisplayBullet(available_bullet_img,WINDOW_WIDTH-32-32*i,96) for i in range(bullet_limit,0,-1)]
 
 # Asteroids list
 asteroids = []
+
+def timer(time_elapse,last_time):
+	current_time = time.time()
+	if current_time-last_time>time_elapse:
+		x = random.choice(asteroid_spawn_x[spawn_sequence])
+		asteroids.append(Asteroid(asteroid_imgs[random.randint(4)],))
 
 def background_show():
 	screen.blit(background,(0,0))
@@ -48,8 +54,16 @@ def bullets_show():
 			screen.blit(*laser.load())
 		else:
 			del lasers[num]
-	for bullet in available_bullets[:3-len(lasers)]:
-		screen.blit(*bullet.load())
+	#for bullet in available_bullets[:bullet_limit-len(lasers)]:
+	#	screen.blit(*bullet.load())
+def asteroid_show():
+	global asteroids
+	for num,asteroid in enumerate(asteroids):
+		if asteroid.changeXY(WINDOW_DIMENSIONS = WINDOW_DIMENSIONS):
+			screen.blit(*asteroid.load())
+		else:
+			del asteroids[num]
+
 
 def gameLoop():
 
@@ -72,7 +86,7 @@ def gameLoop():
 				spaceship.x_chg = 0
 
 			if event.key == pygame.K_SPACE:
-				if len(lasers)<3:
+				if len(lasers)<bullet_limit:
 					lasers.append(Laser(laser_img,spaceship.x,spaceship.y))
 					lasersound.play()
 
