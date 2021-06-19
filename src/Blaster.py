@@ -15,7 +15,7 @@ class Spaceship:
 		self.default_x = 1.25
 		self.default_y = 0
 		# print(self.width,self.height)
-
+		
 	def load(self):
 		return self.img,tuple([self.x-self.width/2,self.y-self.height/2])
 

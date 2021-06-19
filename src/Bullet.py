@@ -15,6 +15,7 @@ class DisplayBullet:
 	def load(self):
 		return self.img,tuple([self.x-self.width/2,self.y-self.height/2])
 
+
 # Defining Laser class for firing bullets/lasers
 class Laser(DisplayBullet):
 	default_x = 0
