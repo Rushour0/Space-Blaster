@@ -35,7 +35,7 @@ uni_asteroid_spawn_x = [list([i for i in range(j,800,36)])[1:-1] for j in range(
 uni_asteroid_spawn_y = 0
 
 score = 0
-score_step = 80
+score_step = 20
 
 # time and speed increment
 time_increment = 0.05
