@@ -11,10 +11,8 @@ def CollisionDetect(toCheck,objectList):
 			return [True,num]
 	return [False,None]
 
-default_y_chg_asteroid = 0.7
-
 class Asteroid:
-	def __init__(self,img_name,x,y):
+	def __init__(self,img_name,x,y,y_speed):
 		img = pygame.image.load(img_name)
 		self.img_path = img_name
 		self.x = x
@@ -23,7 +21,7 @@ class Asteroid:
 		self.width = img.get_width()
 		self.height = img.get_height()
 		self.x_chg = 0
-		self.y_chg = default_y_chg_asteroid
+		self.y_chg = y_speed
 	def load(self):
 		return self.img,tuple([self.x-self.width/2,self.y-self.height/2])
 

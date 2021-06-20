@@ -86,7 +86,7 @@ blasts = []
 blastsound = pygame.mixer.Sound(blast_sound)
 
 # Asteroid Generator with time parameter
-def asteroid_generator(time_interval):
+def asteroid_generator(time_interval,y_speed):
 	global last_time,asteroid_spawn_x
 	current_time = time.time()
 	if current_time-last_time>time_interval:
@@ -98,7 +98,7 @@ def asteroid_generator(time_interval):
 			asteroid_spawn_x = uni_asteroid_spawn_x[random.randint(0,len(uni_asteroid_spawn_x)-1)][:]
 
 		y = uni_asteroid_spawn_y
-		asteroids.append(Asteroid(asteroid_imgs[random.randint(0,3)],x,y))
+		asteroids.append(Asteroid(asteroid_imgs[random.randint(0,3)],x,y,y_speed))
 		last_time = current_time
 
 # Draw background
@@ -230,7 +230,7 @@ def gameLoop():
 
 		screen.fill((0,0,0))
 		background_show()
-		asteroid_generator(time_interval)
+		asteroid_generator(time_interval,default_y_chg_asteroid)
 		asteroid_show()
 		blast_show()
 
@@ -256,7 +256,7 @@ def gameLoop():
 	if score%score_step == 0 and score//score_step != last_chg:
 		temp_time_interval -= time_increment
 		temp_default_y_chg_asteroid += speed_increment
-		print("Change in Difficulty")
+		print("Change in Difficulty",temp_time_interval, temp_default_y_chg_asteroid)
 		last_chg = score//score_step
 
 	for event in pygame.event.get():
@@ -297,7 +297,7 @@ def gameLoop():
 	screen.blit(score_text,score_text_Rect)
 
 	if time.time()-start_time > 2:
-		asteroid_generator(temp_time_interval)
+		asteroid_generator(temp_time_interval,temp_default_y_chg_asteroid)
 
 	asteroid_show()
 	bullets_show()

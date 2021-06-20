@@ -23,6 +23,9 @@ bullet_restore_time = 5
 # Time for generation of new asteroid
 time_interval = 0.75
 
+# default asteroid speed
+default_y_chg_asteroid = 0.7
+
 # Window Dimensions
 WINDOW_DIMENSIONS = (800,600)
 WINDOW_WIDTH,WINDOW_HEIGHT = WINDOW_DIMENSIONS
