@@ -21,10 +21,10 @@ bullet_limit = 3
 bullet_restore_time = 5
 
 # Time for generation of new asteroid
-time_interval = 0.75
+time_interval = 0.84
 
 # default asteroid speed
-default_y_chg_asteroid = 0.7
+default_y_chg_asteroid = 0.8
 
 # Window Dimensions
 WINDOW_DIMENSIONS = (800,600)
@@ -35,9 +35,9 @@ uni_asteroid_spawn_x = [list([i for i in range(j,800,36)])[1:-1] for j in range(
 uni_asteroid_spawn_y = 0
 
 score = 0
-score_step = 10
+score_step = 80
 
 # time and speed increment
-time_increment = 0.01
+time_increment = 0.05
 
 speed_increment = time_interval*default_y_chg_asteroid/(time_interval-time_increment) - default_y_chg_asteroid

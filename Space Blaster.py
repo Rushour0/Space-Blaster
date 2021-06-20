@@ -256,7 +256,7 @@ def gameLoop():
 	if score%score_step == 0 and score//score_step != last_chg:
 		temp_time_interval -= time_increment
 		temp_default_y_chg_asteroid += speed_increment
-		print("Change in Difficulty",temp_time_interval, temp_default_y_chg_asteroid)
+		print("Change in Difficulty",temp_time_interval,temp_default_y_chg_asteroid)
 		last_chg = score//score_step
 
 	for event in pygame.event.get():
