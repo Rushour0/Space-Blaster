@@ -1,8 +1,34 @@
 from globals import *
 from pygame.locals import *
 
+# taking values from globals
+temp_time_interval = time_interval
+temp_default_y_chg_asteroid = default_y_chg_asteroid
+
 # PyGame initialized
 pygame.init()
+
+# Font and size
+font = pygame.font.Font('freesansbold.ttf', 32)
+
+# gameover font
+gameoverfont = pygame.font.Font('freesansbold.ttf', 60)
+
+# gameover text
+gameover_text = gameoverfont.render("GAME OVER", True, RED)
+gameover_text_Rect = gameover_text.get_rect()
+gameover_text_Rect.center = (WINDOW_WIDTH/2,WINDOW_HEIGHT/2)
+
+# final score text
+final_score = font.render(f"FINAL SCORE: {score}", True, AQUA)
+final_score_Rect = final_score.get_rect()
+final_score_Rect.center = (WINDOW_WIDTH/2,WINDOW_HEIGHT/2+60)
+
+# gameover under text
+blink = 0
+gameover_undertext = font.render("Press R to restart the game", True, WHITE)
+gameover_undertext_Rect = gameover_undertext.get_rect()
+gameover_undertext_Rect.center = (WINDOW_WIDTH/2,WINDOW_HEIGHT/2+120)
 
 # For performance
 pygame.event.set_allowed([QUIT, KEYDOWN, KEYUP])
@@ -21,7 +47,14 @@ screen = pygame.display.set_mode(WINDOW_DIMENSIONS, flags, 16)
 # Background image
 background = pygame.image.load(background_img)
 
+# Overlay screen
+transparent_screen = pygame.Surface(WINDOW_DIMENSIONS)
+transparent_screen.set_colorkey(BLACK)
+transparent_screen.set_alpha(255)
+pygame.draw.rect(transparent_screen, BLACK, transparent_screen.get_rect(), 10)
+
 # Blaster declaration
+isAlive = True
 spaceship = Spaceship(spaceship_img,WINDOW_WIDTH/2,WINDOW_HEIGHT-WINDOW_HEIGHT/8)
 
 # Bullets array
@@ -30,7 +63,11 @@ lasers = []
 # Laser sound
 lasersound = pygame.mixer.Sound(laser_sound)
 
+# Last fired time
+last_fired = []
+
 # Display available bullets
+show_bullets = bullet_limit
 available_bullets = [DisplayBullet(available_bullet_img,WINDOW_WIDTH-32-32*i,96) for i in range(bullet_limit,0,-1)]
 
 # Universal asteroid available spawns
@@ -47,18 +84,17 @@ blasts = []
 
 # Blast sound
 blastsound = pygame.mixer.Sound(blast_sound)
+
 # Asteroid Generator with time parameter
-def asteroid_generator(time_elapse):
-	if len(asteroids)>5:
-		return 
+def asteroid_generator(time_interval):
 	global last_time,asteroid_spawn_x
 	current_time = time.time()
-	if current_time-last_time>time_elapse:
+	if current_time-last_time>time_interval:
 		x = random.choice(asteroid_spawn_x)
 		del asteroid_spawn_x[asteroid_spawn_x.index(x)]
 
 		# Change to new x-spawn sequence
-		if len(asteroid_spawn_x) == 0:
+		if not len(asteroid_spawn_x):
 			asteroid_spawn_x = uni_asteroid_spawn_x[random.randint(0,len(uni_asteroid_spawn_x)-1)][:]
 
 		y = uni_asteroid_spawn_y
@@ -74,8 +110,18 @@ def spaceship_show():
 	global spaceship
 	collided,asteroid_num = CollisionDetect(spaceship,asteroids)
 	if collided:
-		#del asteroids[asteroid_num]
-		#del spaceship
+		# Add blast object img
+		blasts.append(Blast(blast_imgs[random.randint(0,2)],asteroids[asteroid_num].x,asteroids[asteroid_num].y))
+		# Play blast sound
+		blastsound.play()
+
+		# Add blast object img
+		blasts.append(Blast(blast_imgs[random.randint(0,2)],spaceship.x,spaceship.y))
+		# Play blast sound
+		blastsound.play()
+
+		del asteroids[asteroid_num]
+		del spaceship
 		return False
 	spaceship.changeXY(WINDOW_DIMENSIONS = WINDOW_DIMENSIONS)
 	screen.blit(*spaceship.load())
@@ -83,7 +129,7 @@ def spaceship_show():
 
 # Draw bullets/lasers
 def bullets_show():
-	global lasers
+	global lasers,show_bullets,last_fired
 	for num,laser in enumerate(lasers):
 		collided,asteroid_num = CollisionDetect(laser,asteroids)
 		if collided:
@@ -95,12 +141,18 @@ def bullets_show():
 			del asteroids[asteroid_num]
 			del lasers[num]
 			continue
+
 		if laser.changeXY(WINDOW_DIMENSIONS = WINDOW_DIMENSIONS):
 			screen.blit(*laser.load())
 		else:
 			del lasers[num]
 
-	for bullet in available_bullets[:bullet_limit-len(lasers)]:
+
+	if len(last_fired) and time.time()-last_fired[0] > bullet_restore_time:
+		show_bullets += 1
+		last_fired = last_fired[1:]
+
+	for bullet in available_bullets[:show_bullets]:
 		screen.blit(*bullet.load())
 	return True
 
@@ -120,12 +172,91 @@ def blast_show():
 			screen.blit(*blast.load())
 		except:
 			del blasts[num]
-	
+
 # Eternally running game loop
-while 1:
+start_time = time.time()
+
+# Reference for increasing score
+last_increment = start_time
+
+# Score text
+score_text = font.render(f'SCORE: {score}', True, BLACK, WHITE)
+score_text_Rect = score_text.get_rect()
+score_text_Rect.topleft = (40 , 40)
+
+last_chg = -1
+
+def resetGame():
+	global last_fired,show_bullets,isAlive,spaceship,asteroids,lasers,score,start_time,last_chg,temp_default_y_chg_asteroid,temp_time_interval
+	
+	# Reset score
+	score = 0
+
+	# New game start time
+	start_time = time.time()
+
+	# Reference for increasing score
+	last_increment = start_time
+
+	# clear fire timings
+	last_fired = []
+
+	# taking values from globals
+	time_interval = temp_time_interval 
+	default_y_chg_asteroid = temp_default_y_chg_asteroid
+
+	# show bullets reset
+	show_bullets = bullet_limit
+
+	# Blaster declaration
+	isAlive = True
+	spaceship = Spaceship(spaceship_img,WINDOW_WIDTH/2,WINDOW_HEIGHT-WINDOW_HEIGHT/8)
+	start_time = time.time()
+	asteroids = []
+	lasers = []
+
+def gameLoop():
+	global isAlive,show_bullets,last_increment,score,blink,time_interval,default_y_chg_asteroid,last_chg
+	if not isAlive:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				return False
+
+			if event.type == pygame.KEYUP:
+				if event.key in [pygame.K_r]:
+					resetGame()
+
+		screen.fill((0,0,0))
+		background_show()
+		asteroid_generator(time_interval)
+		asteroid_show()
+		blast_show()
+
+		# final score text
+		final_score = font.render(f"FINAL SCORE: {score}", True, AQUA)
+		final_score_Rect = final_score.get_rect()
+		final_score_Rect.center = (WINDOW_WIDTH/2,WINDOW_HEIGHT/2+60)
+
+		screen.blit(gameover_text,gameover_text_Rect)
+		screen.blit(final_score,final_score_Rect)
+		if blink%500>250:
+			screen.blit(gameover_undertext,gameover_undertext_Rect)
+		blink+=1
+		pygame.display.update()
+		return True
+
+	if time.time() - start_time > 2 and time.time()-last_increment > 3.5:
+		score += 10
+		last_increment = time.time()
+
+	if score%100 == 0 and score//100 != last_chg:
+		time_interval-= 0.01
+		default_y_chg_asteroid+=0.1
+		last_chg = score//100
+
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
-			exit(0) 
+			return False
 
 		if event.type == pygame.KEYDOWN:
 			if event.key in [pygame.K_LEFT,pygame.K_a]:
@@ -142,19 +273,43 @@ while 1:
 				spaceship.x_chg = 0
 
 			if event.key == pygame.K_SPACE:
-				if len(lasers)<bullet_limit:
+				if show_bullets:
+					show_bullets-=1
+					last_fired.append(time.time())
 					lasers.append(Laser(laser_img,spaceship.x,spaceship.y))
 					lasersound.play()
 
 	
 	screen.fill((0,0,0))
+	
 	background_show()
-	asteroid_generator(time_elapse)
+	
+	# Score counter
+	score_text = font.render(f'SCORE: {score}', True, BLACK, WHITE)
+	score_text_Rect = score_text.get_rect()
+	score_text_Rect.topleft = (40 , 40)
+
+	screen.blit(score_text,score_text_Rect)
+
+	if time.time()-start_time > 2:
+		asteroid_generator(time_interval)
+	
 	bullets_show()
+	
 	if not (spaceship_show()):
-		break
+		isAlive = False
+	
 	asteroid_show()
+	
 	blast_show()
+	
+	# Update all changes to the display
 	pygame.display.update()
+
+	return True
+
+while 1:
+	if not gameLoop():
+		break
 
 print("over")

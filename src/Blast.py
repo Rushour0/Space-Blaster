@@ -9,7 +9,7 @@ class Blast:
 		self.img = img
 		self.width = img.get_width()
 		self.height = img.get_height()
-		self.after_images = 9
+		self.after_images = 15
 
 	def load(self):
 		if self.after_images:
