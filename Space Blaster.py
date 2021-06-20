@@ -239,9 +239,11 @@ def gameLoop():
 
 		screen.blit(gameover_text,gameover_text_Rect)
 		screen.blit(final_score,final_score_Rect)
+
 		if blink%500>250:
 			screen.blit(gameover_undertext,gameover_undertext_Rect)
 		blink+=1
+
 		pygame.display.update()
 		return True
 
@@ -249,10 +251,10 @@ def gameLoop():
 		score += 10
 		last_increment = time.time()
 
-	if score%100 == 0 and score//100 != last_chg:
-		time_interval-= 0.01
+	if score%score_step == 0 and score//score_step != last_chg:
+		time_interval-= 0.05
 		default_y_chg_asteroid+=0.1
-		last_chg = score//100
+		last_chg = score//score_step
 
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:

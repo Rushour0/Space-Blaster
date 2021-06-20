@@ -21,7 +21,7 @@ bullet_limit = 3
 bullet_restore_time = 5
 
 # Time for generation of new asteroid
-time_interval = 0.2
+time_interval = 0.75
 
 # Window Dimensions
 WINDOW_DIMENSIONS = (800,600)
@@ -32,3 +32,4 @@ uni_asteroid_spawn_x = [list([i for i in range(j,800,36)])[1:-1] for j in range(
 uni_asteroid_spawn_y = 0
 
 score = 0
+score_step = 50

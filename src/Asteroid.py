@@ -11,7 +11,7 @@ def CollisionDetect(toCheck,objectList):
 			return [True,num]
 	return [False,None]
 
-default_y_chg_asteroid = 1.5
+default_y_chg_asteroid = 0.7
 
 class Asteroid:
 	def __init__(self,img_name,x,y):
