@@ -9,10 +9,10 @@ temp_default_y_chg_asteroid = default_y_chg_asteroid
 pygame.init()
 
 # Font and size
-font = pygame.font.Font('freesansbold.ttf', 32)
+font = pygame.font.Font(font_path, 32)
 
 # gameover font
-gameoverfont = pygame.font.Font('freesansbold.ttf', 60)
+gameoverfont = pygame.font.Font(font_path, 60)
 
 # gameover text
 gameover_text = gameoverfont.render("GAME OVER", True, RED)
