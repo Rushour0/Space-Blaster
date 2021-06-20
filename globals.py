@@ -32,4 +32,9 @@ uni_asteroid_spawn_x = [list([i for i in range(j,800,36)])[1:-1] for j in range(
 uni_asteroid_spawn_y = 0
 
 score = 0
-score_step = 50
+score_step = 10
+
+# time and speed increment
+time_increment = 0.01
+
+speed_increment = time_interval*default_y_chg_asteroid/(time_interval-time_increment) - default_y_chg_asteroid

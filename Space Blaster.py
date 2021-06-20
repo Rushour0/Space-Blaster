@@ -187,7 +187,7 @@ score_text_Rect.topleft = (40 , 40)
 last_chg = -1
 
 def resetGame():
-	global last_fired,show_bullets,isAlive,spaceship,asteroids,lasers,score,start_time,last_chg,temp_default_y_chg_asteroid,temp_time_interval
+	global time_interval,default_y_chg_asteroid,last_fired,show_bullets,isAlive,spaceship,asteroids,lasers,score,start_time,last_chg,temp_default_y_chg_asteroid,temp_time_interval
 	
 	# Reset score
 	score = 0
@@ -202,8 +202,8 @@ def resetGame():
 	last_fired = []
 
 	# taking values from globals
-	time_interval = temp_time_interval 
-	default_y_chg_asteroid = temp_default_y_chg_asteroid
+	temp_time_interval = time_interval 
+	temp_default_y_chg_asteroid = default_y_chg_asteroid
 
 	# show bullets reset
 	show_bullets = bullet_limit
@@ -216,7 +216,7 @@ def resetGame():
 	lasers = []
 
 def gameLoop():
-	global isAlive,show_bullets,last_increment,score,blink,time_interval,default_y_chg_asteroid,last_chg
+	global temp_time_interval,temp_default_y_chg_asteroid,isAlive,show_bullets,last_increment,score,blink,time_interval,default_y_chg_asteroid,last_chg
 	if not isAlive:
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
@@ -225,6 +225,8 @@ def gameLoop():
 			if event.type == pygame.KEYUP:
 				if event.key in [pygame.K_r]:
 					resetGame()
+					print(time_interval)
+					print(default_y_chg_asteroid)
 
 		screen.fill((0,0,0))
 		background_show()
@@ -252,8 +254,9 @@ def gameLoop():
 		last_increment = time.time()
 
 	if score%score_step == 0 and score//score_step != last_chg:
-		time_interval-= 0.05
-		default_y_chg_asteroid+=0.1
+		temp_time_interval -= time_increment
+		temp_default_y_chg_asteroid += speed_increment
+		print("Change in Difficulty")
 		last_chg = score//score_step
 
 	for event in pygame.event.get():
@@ -276,7 +279,7 @@ def gameLoop():
 
 			if event.key == pygame.K_SPACE:
 				if show_bullets:
-					show_bullets-=1
+					show_bullets -= 1
 					last_fired.append(time.time())
 					lasers.append(Laser(laser_img,spaceship.x,spaceship.y))
 					lasersound.play()
@@ -294,14 +297,12 @@ def gameLoop():
 	screen.blit(score_text,score_text_Rect)
 
 	if time.time()-start_time > 2:
-		asteroid_generator(time_interval)
-	
+		asteroid_generator(temp_time_interval)
+
+	asteroid_show()
 	bullets_show()
-	
 	if not (spaceship_show()):
 		isAlive = False
-	
-	asteroid_show()
 	
 	blast_show()
 	
