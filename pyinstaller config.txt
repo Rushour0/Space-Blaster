@@ -1,0 +1,1 @@
+pyinstaller --noconfirm --onefile --windowed --icon "D:/Projects/Space Blaster/img/spaceship.ico" --name "Space Blaster" --paths "D:/Projects/Space Blaster/img" --paths "D:/Projects/Space Blaster/music" --paths "D:/Projects/Space Blaster/src" --paths "D:/Projects/Space Blaster/fonts"  "D:/Projects/Space Blaster/Space Blaster.py"
