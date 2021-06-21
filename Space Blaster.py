@@ -15,7 +15,7 @@ font = pygame.font.Font(font_path, 32)
 blink_start = 0
 start_text = font.render("Press S to start the game", True, WHITE)
 start_text_Rect = start_text.get_rect()
-start_text_Rect.center = (WINDOW_WIDTH/2,WINDOW_HEIGHT/2+120)
+start_text_Rect.center = (WINDOW_WIDTH/2,WINDOW_HEIGHT/2)
 
 # gameover font
 gameoverfont = pygame.font.Font(font_path, 60)
@@ -179,12 +179,6 @@ def blast_show():
 		except:
 			del blasts[num]
 
-# Eternally running game loop
-start_time = time.time()
-
-# Reference for increasing score
-last_increment = start_time
-
 # Score text
 score_text = font.render(f'SCORE: {score}', True, WHITE)
 score_text_Rect = score_text.get_rect()
@@ -225,7 +219,7 @@ def resetGame():
 started = False
 
 def gameLoop():
-	global temp_time_interval,temp_default_y_chg_asteroid,isAlive,show_bullets,last_increment,score,blink,time_interval,default_y_chg_asteroid,last_chg
+	global start_time,last_increment,started,blink_start,temp_time_interval,temp_default_y_chg_asteroid,isAlive,show_bullets,last_increment,score,blink,time_interval,default_y_chg_asteroid,last_chg
 	if not started:
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
@@ -234,8 +228,18 @@ def gameLoop():
 			if event.type == pygame.KEYUP:
 				if event.key in [pygame.K_s]:
 					started = True
+					
+					# record time at which the game starts
+					start_time = time.time()
 
-		if blink_start%500>250:
+					# Reference for increasing score
+					last_increment = start_time
+
+
+		screen.fill((0,0,0))
+		background_show()
+
+		if blink_start%800>400:
 			screen.blit(start_text,start_text_Rect)
 		blink_start+=1
 
