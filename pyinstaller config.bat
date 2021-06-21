@@ -8,4 +8,5 @@ mkdir fonts,music,img
 copy "D:\Projects\Space Blaster\fonts\" D:\Projects\Game\fonts
 copy "D:\Projects\Space Blaster\music\" D:\Projects\Game\music
 copy "D:\Projects\Space Blaster\img\" D:\Projects\Game\img
-tar -a -c -f .\..\GameFiles.zip *
+tar -a -c -f ".\..\Space Blaster\GameFiles.zip" *
+
