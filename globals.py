@@ -21,7 +21,7 @@ bullet_limit = 3
 bullet_restore_time = 5
 
 # Time for generation of new asteroid
-time_interval = 0.84
+time_interval = 0.75
 
 # default asteroid speed
 default_y_chg_asteroid = 0.8

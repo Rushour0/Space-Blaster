@@ -329,6 +329,7 @@ def gameLoop():
 
 	asteroid_show()
 	bullets_show()
+	
 	if not (spaceship_show()):
 		isAlive = False
 	
