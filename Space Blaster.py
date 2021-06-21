@@ -26,7 +26,7 @@ final_score_Rect.center = (WINDOW_WIDTH/2,WINDOW_HEIGHT/2+60)
 
 # gameover under text
 blink = 0
-gameover_undertext = font.render("Press R to restart the game", True, WHITE)
+gameover_undertext = font.render("Press S to start the game", True, WHITE)
 gameover_undertext_Rect = gameover_undertext.get_rect()
 gameover_undertext_Rect.center = (WINDOW_WIDTH/2,WINDOW_HEIGHT/2+120)
 
@@ -209,7 +209,7 @@ def resetGame():
 	show_bullets = bullet_limit
 
 	# Blaster declaration
-	isAlive = True
+	isAlive = False
 	spaceship = Spaceship(spaceship_img,WINDOW_WIDTH/2,WINDOW_HEIGHT-WINDOW_HEIGHT/8)
 	start_time = time.time()
 	asteroids = []
@@ -223,7 +223,7 @@ def gameLoop():
 				return False
 
 			if event.type == pygame.KEYUP:
-				if event.key in [pygame.K_r]:
+				if event.key in [pygame.K_s]:
 					resetGame()
 					print(time_interval)
 					print(default_y_chg_asteroid)
