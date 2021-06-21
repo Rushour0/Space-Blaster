@@ -54,7 +54,7 @@ transparent_screen.set_alpha(255)
 pygame.draw.rect(transparent_screen, BLACK, transparent_screen.get_rect(), 10)
 
 # Blaster declaration
-isAlive = True
+isAlive = False
 spaceship = Spaceship(spaceship_img,WINDOW_WIDTH/2,WINDOW_HEIGHT-WINDOW_HEIGHT/8)
 
 # Bullets array
@@ -208,8 +208,8 @@ def resetGame():
 	# show bullets reset
 	show_bullets = bullet_limit
 
-	# Blaster declaration
-	isAlive = False
+	# Reinitializing all objects
+	isAlive = True
 	spaceship = Spaceship(spaceship_img,WINDOW_WIDTH/2,WINDOW_HEIGHT-WINDOW_HEIGHT/8)
 	start_time = time.time()
 	asteroids = []
