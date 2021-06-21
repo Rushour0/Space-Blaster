@@ -40,4 +40,4 @@ score_step = 20
 # time and speed increment
 time_increment = 0.05
 
-speed_increment = time_interval*default_y_chg_asteroid/(time_interval-time_increment) - default_y_chg_asteroid
+speed_increment = time_increment*default_y_chg_asteroid/(time_interval-time_increment)
