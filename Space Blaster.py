@@ -11,6 +11,12 @@ pygame.init()
 # Font and size
 font = pygame.font.Font(font_path, 32)
 
+# start screen text
+blink_start = 0
+start_text = font.render("Press S to start the game", True, WHITE)
+start_text_Rect = start_text.get_rect()
+start_text_Rect.center = (WINDOW_WIDTH/2,WINDOW_HEIGHT/2+120)
+
 # gameover font
 gameoverfont = pygame.font.Font(font_path, 60)
 
@@ -26,7 +32,7 @@ final_score_Rect.center = (WINDOW_WIDTH/2,WINDOW_HEIGHT/2+60)
 
 # gameover under text
 blink = 0
-gameover_undertext = font.render("Press S to start the game", True, WHITE)
+gameover_undertext = font.render("Press R to restart the game", True, WHITE)
 gameover_undertext_Rect = gameover_undertext.get_rect()
 gameover_undertext_Rect.center = (WINDOW_WIDTH/2,WINDOW_HEIGHT/2+120)
 
@@ -54,7 +60,7 @@ transparent_screen.set_alpha(255)
 pygame.draw.rect(transparent_screen, BLACK, transparent_screen.get_rect(), 10)
 
 # Blaster declaration
-isAlive = False
+isAlive = True
 spaceship = Spaceship(spaceship_img,WINDOW_WIDTH/2,WINDOW_HEIGHT-WINDOW_HEIGHT/8)
 
 # Bullets array
@@ -180,7 +186,7 @@ start_time = time.time()
 last_increment = start_time
 
 # Score text
-score_text = font.render(f'SCORE: {score}', True, BLACK, WHITE)
+score_text = font.render(f'SCORE: {score}', True, WHITE)
 score_text_Rect = score_text.get_rect()
 score_text_Rect.topleft = (40 , 40)
 
@@ -208,22 +214,40 @@ def resetGame():
 	# show bullets reset
 	show_bullets = bullet_limit
 
-	# Reinitializing all objects
+	# Reinitializing
 	isAlive = True
 	spaceship = Spaceship(spaceship_img,WINDOW_WIDTH/2,WINDOW_HEIGHT-WINDOW_HEIGHT/8)
 	start_time = time.time()
 	asteroids = []
 	lasers = []
 
+# has the game started ?? (First run initiated?)
+started = False
+
 def gameLoop():
 	global temp_time_interval,temp_default_y_chg_asteroid,isAlive,show_bullets,last_increment,score,blink,time_interval,default_y_chg_asteroid,last_chg
-	if not isAlive:
+	if not started:
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				return False
 
 			if event.type == pygame.KEYUP:
 				if event.key in [pygame.K_s]:
+					started = True
+
+		if blink_start%500>250:
+			screen.blit(start_text,start_text_Rect)
+		blink_start+=1
+
+		pygame.display.update()
+		return True
+	if not isAlive:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				return False
+
+			if event.type == pygame.KEYUP:
+				if event.key in [pygame.K_r]:
 					resetGame()
 					print(time_interval)
 					print(default_y_chg_asteroid)
@@ -290,7 +314,7 @@ def gameLoop():
 	background_show()
 	
 	# Score counter
-	score_text = font.render(f'SCORE: {score}', True, BLACK, WHITE)
+	score_text = font.render(f'SCORE: {score}', True, WHITE)
 	score_text_Rect = score_text.get_rect()
 	score_text_Rect.topleft = (40 , 40)
 
