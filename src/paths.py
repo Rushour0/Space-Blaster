@@ -7,4 +7,4 @@ blast_sound = "music/blast.wav"
 available_bullet_img = "img/available_bullet.png"
 asteroid_imgs = [f"img/asteroid{i}.png" for i in range(4)]
 blast_imgs = [f"img/explosion{i}.png" for i in range(3)]
-font_path = "fonts/ka1.ttf"
+font_path = "fonts/computerfont.ttf"

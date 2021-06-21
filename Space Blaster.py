@@ -15,7 +15,7 @@ font = pygame.font.Font(font_path, 32)
 blink_start = 0
 start_text = font.render("Press S to start the game", True, WHITE)
 start_text_Rect = start_text.get_rect()
-start_text_Rect.center = (WINDOW_WIDTH/2,WINDOW_HEIGHT/2)
+start_text_Rect.center = (WINDOW_WIDTH/2,WINDOW_HEIGHT/2-60)
 
 # gameover font
 gameoverfont = pygame.font.Font(font_path, 60)
@@ -23,18 +23,18 @@ gameoverfont = pygame.font.Font(font_path, 60)
 # gameover text
 gameover_text = gameoverfont.render("GAME OVER", True, RED)
 gameover_text_Rect = gameover_text.get_rect()
-gameover_text_Rect.center = (WINDOW_WIDTH/2,WINDOW_HEIGHT/2)
+gameover_text_Rect.center = (WINDOW_WIDTH/2,WINDOW_HEIGHT/2-60)
 
 # final score text
 final_score = font.render(f"FINAL SCORE: {score}", True, AQUA)
 final_score_Rect = final_score.get_rect()
-final_score_Rect.center = (WINDOW_WIDTH/2,WINDOW_HEIGHT/2+60)
+final_score_Rect.center = (WINDOW_WIDTH/2,WINDOW_HEIGHT/2)
 
 # gameover under text
 blink = 0
 gameover_undertext = font.render("Press R to restart the game", True, WHITE)
 gameover_undertext_Rect = gameover_undertext.get_rect()
-gameover_undertext_Rect.center = (WINDOW_WIDTH/2,WINDOW_HEIGHT/2+120)
+gameover_undertext_Rect.center = (WINDOW_WIDTH/2,WINDOW_HEIGHT/2+60)
 
 # For performance
 pygame.event.set_allowed([QUIT, KEYDOWN, KEYUP])
@@ -265,7 +265,7 @@ def gameLoop():
 		# final score text
 		final_score = font.render(f"FINAL SCORE: {score}", True, AQUA)
 		final_score_Rect = final_score.get_rect()
-		final_score_Rect.center = (WINDOW_WIDTH/2,WINDOW_HEIGHT/2+60)
+		final_score_Rect.center = (WINDOW_WIDTH/2,WINDOW_HEIGHT/2)
 
 		screen.blit(gameover_text,gameover_text_Rect)
 		screen.blit(final_score,final_score_Rect)
