@@ -1,17 +1,20 @@
 # Space-Blaster
 
-
 A simple space blaster game, in which the objective is to survive the falling asteroids.
+The game is developed using python in accordance with pygame - game engine. 
 
-![game-start](https://user-images.githubusercontent.com/72869428/125681562-d45e939d-d9ef-4424-8be5-a70e0bcf4f07.png)
+### Installation
 
+```
+git clone https://github.com/Rushour0/Space-Blaster.git
+pip install -r requirements.txt
+python "Space Blaster.py"
+```
 
-![in-game](https://user-images.githubusercontent.com/72869428/125681574-da6ace57-8f05-4067-8674-84b2f18f410c.png)
+####  OR
 
+Download from [here](https://github.com/Rushour0/Space-Blaster/releases/download/v1/GameFiles.zip)
 
-![game-over](https://user-images.githubusercontent.com/72869428/125681588-69f2ea1c-289f-4bd7-bcf1-73ba4cb8d5cb.png)
-
-### The game is developed using python in accordance with pygame - game engine. 
 
 ## How to play the game
 
@@ -23,3 +26,7 @@ A simple space blaster game, in which the objective is to survive the falling as
 
 
 Find all the game's compiled files in the [GameFiles.zip](https://github.com/Rushour0/Space-Blaster/blob/main/GameFiles.zip)
+
+Example gif of the running game
+
+![2021-09-19-14-49-12](https://user-images.githubusercontent.com/72869428/133922716-2cec8053-2b9e-4683-837d-285b6b072599.gif)
