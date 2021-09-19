@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 
 *.bat
+*.pyc
 # C extensions
 *.so
 
@@ -55,6 +56,8 @@ coverage.xml
 # Translations
 *.mo
 *.pot
+
+*.zip
 
 # Django stuff:
 *.log
