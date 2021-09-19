@@ -25,8 +25,6 @@ Download from [here](https://github.com/Rushour0/Space-Blaster/releases/download
 ### *Happy gaming (and building the game)!*
 
 
-Find all the game's compiled files in the [GameFiles.zip](https://github.com/Rushour0/Space-Blaster/blob/main/GameFiles.zip)
-
 Example gif of the running game
 
 ![2021-09-19-14-49-12](https://user-images.githubusercontent.com/72869428/133922716-2cec8053-2b9e-4683-837d-285b6b072599.gif)
