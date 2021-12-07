@@ -8,6 +8,12 @@ temp_default_y_chg_asteroid = default_y_chg_asteroid
 # PyGame initialized
 pygame.init()
 
+# Set FPS 
+FPS = 60
+
+# Set clock for refresh rate
+clock = pygame.time.Clock()
+
 # Font and size
 font = pygame.font.Font(font_path, 32)
 
@@ -220,6 +226,7 @@ started = False
 
 def gameLoop():
 	global start_time,last_increment,started,blink_start,temp_time_interval,temp_default_y_chg_asteroid,isAlive,show_bullets,last_increment,score,blink,time_interval,default_y_chg_asteroid,last_chg
+	clock.tick(FPS)
 	if not started:
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
@@ -239,9 +246,10 @@ def gameLoop():
 		screen.fill((0,0,0))
 		background_show()
 
-		if blink_start%800>400:
+		if blink_start % FPS > FPS // 2:
 			screen.blit(start_text,start_text_Rect)
-		blink_start+=1
+			
+		blink_start += 1
 
 		pygame.display.update()
 		return True
@@ -270,7 +278,7 @@ def gameLoop():
 		screen.blit(gameover_text,gameover_text_Rect)
 		screen.blit(final_score,final_score_Rect)
 
-		if blink%500>250:
+		if blink % FPS > FPS // 2:
 			screen.blit(gameover_undertext,gameover_undertext_Rect)
 		blink+=1
 

@@ -24,7 +24,7 @@ bullet_restore_time = 5
 time_interval = 0.75
 
 # default asteroid speed
-default_y_chg_asteroid = 0.8
+default_y_chg_asteroid = 6.5
 
 # Window Dimensions
 WINDOW_DIMENSIONS = (800,600)
